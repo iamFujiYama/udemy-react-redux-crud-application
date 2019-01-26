@@ -1,44 +1,26 @@
-import React, {Fragment} from 'react';
-import Proptypes from 'prop-types'
+import React, {Fragment, Component } from 'react';
 
-const App = () => {
-  const users = [
-    {
-      name: "Taroh",
-      age: 10
-    },
-    {
-      name: "Hanako",
-      age: 15
-    },
-    {
-      name: "Noname",
-      age: NaN
-    }
-  ]
+const App = () => ( <Counter></Counter> )
 
-  return (
-    <Fragment>
-      {
-        users.map( (user, i)=> {
-            return (
-              <User name={user.name} age={user.age} key={i} />
-            )
-        })
-      }
-    </Fragment>
-  )
-}
+class Counter extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { count: 0 }
+  }
 
-const User = (p) => {
-  return (
-    <div>Hi, I am {p.name}, and {p.age} years old :D </div>
-  )
-}
+  handleButton = (i) => {
+      this.setState({ count: this.state.count + i })
+  }
 
-User.propTypes = {
-  name: Proptypes.string,
-  age: Proptypes.number.isRequired
+  render() {
+    return (
+      <Fragment>
+       <div> Counter is : { this.state.count } </div>
+       <button onClick={ () => this.handleButton(1) } > +1 </button>
+       <button onClick={ () => this.handleButton(-1) } > -1 </button>
+      </Fragment>
+    )
+  }
 }
 
 export default App;
