@@ -1,25 +1,62 @@
-import React, {Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import { postEvent } from '../actions';
+import { Field, reduxForm } from 'redux-form';
+import { postEvent } from '../actions';
 
 class EventsNew extends Component {
+  constructor(props) {
+    super(props)
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+  renderField(field) {
+    const { input, label, type, meta: {touched, error} } = field
+    return (
+      <div>
+        <input {...input} type={ type } placeholder={ label }/>
+        { touched && error && <span>{ error }</span>}
+      </div>
+    )
+  }
+
+  async onSubmit(values) {
+    await this.props.postEvent(values)
+    this.props.history.push('/')
+  }
+
 
   render() {
+
+    const { handleSubmit } = this.props
+
     return (
-      <Fragment>
-      <div>
-        bar
-      </div>
-      <Link to="/">Cancel</Link>
-      </Fragment>
+      <form onSubmit={ handleSubmit(this.onSubmit) } >
+        <div>
+          <Field label="Title" name="title" type="text" component={this.renderField} />
+          <Field label="Body" name="body" type="text" component={this.renderField} />
+        </div>
+
+        <div>
+          <input type="submit" value="Submit" disabled={false} />
+          <Link to="/">Cancel</Link>
+        </div>
+      </form>
     )
   }
 }
 
-const mapStateToProps = state => null
 
-const mapDispatchToProps = null
+const mapDispatchToProps = ({ postEvent })
 
+const validate = values => {
+  const errors = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventsNew);
+  if (!values.title) errors.title = "Enter a title"
+  if (!values.body)  errors.body = "Enter a body"
+
+  return errors;
+}
+
+export default connect(null, mapDispatchToProps)(
+  reduxForm({validate, form: 'eventNewForm'})(EventsNew)
+);
