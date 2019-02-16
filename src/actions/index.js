@@ -17,6 +17,7 @@ export const postEvent = values => async dispatch => {
   const response = await axios.post(`${ROOT_URL}/events${QUERY_STRING}`, values)
   dispatch({ type: CREATE_EVENT, response})
 }
+<<<<<<< HEAD
 
 export const putEvent = values => async dispatch => {
   const response = await axios.put(`${ROOT_URL}/events/${values.id}${QUERY_STRING}`, values)
@@ -31,4 +32,11 @@ export const deleteEvent = id => async dispatch => {
 export const getEvent = id => async dispatch => {
   const response = await axios.get(`${ROOT_URL}/events/${id}${QUERY_STRING}`)
   dispatch({ type: READ_EVENT, response})
+=======
+
+export const deleteEvent = id => async dispatch => {
+  console.log('IN_ACTION')
+  await axios.delete(`${ROOT_URL}/events/${id}${QUERY_STRING}`)
+  dispatch({ type: DELETE_EVENT, id})
+>>>>>>> e655a30f9d20615a80cc3294872046294834c742
 }

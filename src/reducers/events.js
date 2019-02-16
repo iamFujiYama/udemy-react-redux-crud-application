@@ -1,9 +1,12 @@
 import _ from 'lodash'
 import {
 READ_EVENTS,
+<<<<<<< HEAD
 READ_EVENT,
 CREATE_EVENT,
 UPDATE_EVENT,
+=======
+>>>>>>> e655a30f9d20615a80cc3294872046294834c742
 DELETE_EVENT
 } from '../actions'
 
@@ -17,6 +20,10 @@ export default (events = {}, action) => {
     case READ_EVENTS:
       return _.mapKeys(action.response.data, 'id')
     case DELETE_EVENT:
+<<<<<<< HEAD
+=======
+      console.log("IN REDUCER")
+>>>>>>> e655a30f9d20615a80cc3294872046294834c742
       delete events[action.id]
       return { ...events }
     default:
